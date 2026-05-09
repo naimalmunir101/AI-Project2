@@ -6,14 +6,14 @@
 
 Hello and welcome! 
 
-The **main purpose** of this project is to automatically detect different types of road conditions using Deep Learning and Computer Vision techniques.Road damage is a very common problem in many countries. Cracks, potholes and damaged roads can cause:
+The **main purpose** of this project is to automatically detect different types of road conditions using Deep Learning and Computer Vision techniques. Road damage is a very common problem in many countries. Cracks, potholes and damaged roads can cause:
 
 - traffic accidents
 - vehicle damage
 - uncomfortable travel
 - maintenance issues
 
-Traditionally, road inspection is done manually which is time-consuming, expensive and unsafe in some situations.To solve this problem, we developed a CNN-based image classification system using PyTorch that can classify road images into **four categories**:
+Traditionally, road inspection is done manually which is time-consuming, expensive and unsafe in some situations. To solve this problem, we developed a CNN-based image classification system using PyTorch that can classify road images into **four categories**:
 
 - Crack
 - Normal Road
