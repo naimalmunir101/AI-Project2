@@ -126,7 +126,7 @@ To evaluate our model, we used:
 
 ## **📊 Final Results**
 
-<img width="347" height="121" alt="image" src="https://github.com/user-attachments/assets/5b350b13-f20d-43b5-8052-16d6f8f24341" />
+<img width="448" height="144" alt="image" src="https://github.com/user-attachments/assets/168a48c8-ef1d-430a-b4f1-0d1f6abb1f14" />
 
 The model successfully learned road damage patterns and produced good classification performance considering the custom dataset size.
 
@@ -138,7 +138,7 @@ The model successfully learned road damage patterns and produced good classifica
 
 This graph shows how the model accuracy improved during training and validation across multiple epochs.
 
-<img width="461" height="287" alt="image" src="https://github.com/user-attachments/assets/b20a3221-3247-4841-83d3-bf720432108c" />
+<img width="455" height="286" alt="image" src="https://github.com/user-attachments/assets/b20a3221-3247-4841-83d3-bf720432108c" />
 
 **2- Training Loss Graph**
 
@@ -150,7 +150,7 @@ This graph shows how the training loss decreased during the learning process.
 
 The confusion matrix shows detailed classification performance of the CNN model for all four classes.
 
-<img width="375" height="281" alt="image" src="https://github.com/user-attachments/assets/7201ae1b-e7f4-4d8b-854c-c01171a33150" />
+<img width="455" height="286" alt="image" src="https://github.com/user-attachments/assets/07e74bbb-9801-4636-aca6-8a02e512dec8" />
 
 ---
 
