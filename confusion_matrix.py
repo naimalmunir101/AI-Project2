@@ -1,0 +1,160 @@
+import torch
+import torch.nn as nn
+
+from torchvision import datasets, transforms
+from torch.utils.data import DataLoader
+
+from sklearn.metrics import confusion_matrix
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# ==========================================
+# DEVICE
+# ==========================================
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+print("Using Device:", device)
+
+# ==========================================
+# IMAGE TRANSFORM
+# ==========================================
+
+transform = transforms.Compose([
+
+    transforms.Resize((224, 224)),
+
+    transforms.ToTensor()
+])
+
+# ==========================================
+# LOAD TEST DATASET
+# ==========================================
+
+test_dataset = datasets.ImageFolder(
+
+    root="split_dataset/test",
+    transform=transform
+)
+
+test_loader = DataLoader(
+
+    test_dataset,
+    batch_size=16,
+    shuffle=False
+)
+
+classes = test_dataset.classes
+
+print("Classes:", classes)
+
+# ==========================================
+# CNN MODEL
+# ==========================================
+
+class RoadCNN(nn.Module):
+
+    def __init__(self):
+
+        super(RoadCNN, self).__init__()
+
+        self.conv_layers = nn.Sequential(
+
+            nn.Conv2d(3, 32, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(2),
+
+            nn.Conv2d(32, 64, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(2),
+
+            nn.Conv2d(64, 128, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(2)
+        )
+
+        self.fc_layers = nn.Sequential(
+
+            nn.Flatten(),
+
+            nn.Linear(128 * 28 * 28, 512),
+
+            nn.ReLU(),
+
+            nn.Dropout(0.5),
+
+            nn.Linear(512, 4)
+        )
+
+    def forward(self, x):
+
+        x = self.conv_layers(x)
+
+        x = self.fc_layers(x)
+
+        return x
+
+# ==========================================
+# LOAD MODEL
+# ==========================================
+
+model = RoadCNN().to(device)
+
+model.load_state_dict(torch.load("best_road_model.pth"))
+
+model.eval()
+
+print("\nBest Model Loaded Successfully!")
+
+# ==========================================
+# PREDICTIONS
+# ==========================================
+
+all_labels = []
+all_predictions = []
+
+with torch.no_grad():
+
+    for images, labels in test_loader:
+
+        images = images.to(device)
+
+        outputs = model(images)
+
+        _, predicted = torch.max(outputs, 1)
+
+        all_labels.extend(labels.numpy())
+
+        all_predictions.extend(predicted.cpu().numpy())
+
+# ==========================================
+# CONFUSION MATRIX
+# ==========================================
+
+cm = confusion_matrix(all_labels, all_predictions)
+
+# ==========================================
+# PLOT
+# ==========================================
+
+plt.figure(figsize=(8,6))
+
+sns.heatmap(
+
+    cm,
+    annot=True,
+    fmt='d',
+    cmap='Blues',
+    xticklabels=classes,
+    yticklabels=classes
+)
+
+plt.xlabel("Predicted Class")
+
+plt.ylabel("True Class")
+
+plt.title("Confusion Matrix")
+
+plt.savefig("confusion_matrix.png")
+
+plt.show()

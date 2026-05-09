@@ -1,0 +1,129 @@
+import torch
+import torch.nn as nn
+
+from torchvision import datasets, transforms
+from torch.utils.data import DataLoader
+
+# ==========================================
+# DEVICE
+# ==========================================
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+print("Using Device:", device)
+
+# ==========================================
+# IMAGE TRANSFORM
+# ==========================================
+
+transform = transforms.Compose([
+
+    transforms.Resize((224, 224)),
+
+    transforms.ToTensor()
+])
+
+# ==========================================
+# LOAD TEST DATASET
+# ==========================================
+
+test_dataset = datasets.ImageFolder(
+
+    root="split_dataset/test",
+    transform=transform
+)
+
+test_loader = DataLoader(
+
+    test_dataset,
+    batch_size=16,
+    shuffle=False
+)
+
+classes = test_dataset.classes
+
+print("Classes:", classes)
+
+# ==========================================
+# CNN MODEL
+# ==========================================
+
+class RoadCNN(nn.Module):
+
+    def __init__(self):
+
+        super(RoadCNN, self).__init__()
+
+        self.conv_layers = nn.Sequential(
+
+            nn.Conv2d(3, 32, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(2),
+
+            nn.Conv2d(32, 64, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(2),
+
+            nn.Conv2d(64, 128, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(2)
+        )
+
+        self.fc_layers = nn.Sequential(
+
+            nn.Flatten(),
+
+            nn.Linear(128 * 28 * 28, 512),
+
+            nn.ReLU(),
+
+            nn.Dropout(0.5),
+
+            nn.Linear(512, 4)
+        )
+
+    def forward(self, x):
+
+        x = self.conv_layers(x)
+
+        x = self.fc_layers(x)
+
+        return x
+
+# ==========================================
+# LOAD MODEL
+# ==========================================
+
+model = RoadCNN().to(device)
+
+model.load_state_dict(torch.load("best_road_model.pth"))
+
+model.eval()
+
+print("\nBest Model Loaded Successfully!")
+
+# ==========================================
+# TESTING
+# ==========================================
+
+correct = 0
+total = 0
+
+with torch.no_grad():
+
+    for images, labels in test_loader:
+
+        images = images.to(device)
+        labels = labels.to(device)
+
+        outputs = model(images)
+
+        _, predicted = torch.max(outputs, 1)
+
+        total += labels.size(0)
+
+        correct += (predicted == labels).sum().item()
+
+accuracy = 100 * correct / total
+
+print(f"\nTest Accuracy: {accuracy:.2f}%")
