@@ -6,9 +6,7 @@
 
 Hello and welcome! 
 
-The **main purpose** of this project is to automatically detect different types of road conditions using Deep Learning and Computer Vision techniques.
-
-Road damage is a very common problem in many countries. Cracks, potholes and damaged roads can cause:
+The **main purpose** of this project is to automatically detect different types of road conditions using Deep Learning and Computer Vision techniques.Road damage is a very common problem in many countries. Cracks, potholes and damaged roads can cause:
 
 - traffic accidents
 - vehicle damage
