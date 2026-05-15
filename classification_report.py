@@ -6,6 +6,9 @@ from torch.utils.data import DataLoader
 
 from sklearn.metrics import classification_report
 
+import pandas as pd
+import matplotlib.pyplot as plt
+
 # ==========================================
 # DEVICE
 # ==========================================
@@ -129,6 +132,14 @@ with torch.no_grad():
 # CLASSIFICATION REPORT
 # ==========================================
 
+report_dict = classification_report(
+
+    all_labels,
+    all_predictions,
+    target_names=classes,
+    output_dict=True
+)
+
 report = classification_report(
 
     all_labels,
@@ -139,3 +150,69 @@ report = classification_report(
 print("\nClassification Report:\n")
 
 print(report)
+
+# ==========================================
+# CONVERT TO DATAFRAME
+# ==========================================
+
+df = pd.DataFrame(report_dict).transpose()
+
+# Round values
+
+df = df.round(2)
+
+# ==========================================
+# SAVE REPORT AS PNG
+# ==========================================
+
+fig, ax = plt.subplots(figsize=(12, 5))
+
+ax.axis('off')
+
+table = ax.table(
+
+    cellText=df.values,
+    colLabels=df.columns,
+    rowLabels=df.index,
+    cellLoc='center',
+    loc='center'
+)
+
+# ==========================================
+# TABLE FORMATTING
+# ==========================================
+
+table.auto_set_font_size(False)
+
+table.set_fontsize(11)
+
+table.scale(1.3, 2)
+
+# ==========================================
+# TITLE
+# ==========================================
+
+plt.title(
+
+    "Classification Report",
+    fontsize=16,
+    fontweight='bold',
+    pad=20
+)
+
+# ==========================================
+# SAVE IMAGE
+# ==========================================
+
+plt.tight_layout()
+
+plt.savefig(
+
+    "classification_report.png",
+    bbox_inches='tight',
+    dpi=300
+)
+
+plt.show()
+
+print("\nClassification report image saved successfully!")

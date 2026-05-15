@@ -4,21 +4,10 @@ import torch.nn as nn
 from torchvision import transforms
 from PIL import Image
 
-# ==========================================
-# DEVICE
-# ==========================================
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-# ==========================================
-# CLASS NAMES
-# ==========================================
-
 classes = ['Crack', 'Normal', 'Patchwork', 'Pothole']
-
-# ==========================================
-# IMAGE TRANSFORM
-# ==========================================
 
 transform = transforms.Compose([
 
@@ -26,10 +15,6 @@ transform = transforms.Compose([
 
     transforms.ToTensor()
 ])
-
-# ==========================================
-# CNN MODEL
-# ==========================================
 
 class RoadCNN(nn.Module):
 
@@ -73,9 +58,6 @@ class RoadCNN(nn.Module):
 
         return x
 
-# ==========================================
-# LOAD MODEL
-# ==========================================
 
 model = RoadCNN().to(device)
 
@@ -85,15 +67,7 @@ model.eval()
 
 print("Best Model Loaded Successfully!")
 
-# ==========================================
-# IMAGE PATH
-# ==========================================
-
 image_path = "test.jpg"
-
-# ==========================================
-# LOAD IMAGE
-# ==========================================
 
 image = Image.open(image_path).convert("RGB")
 
@@ -102,10 +76,6 @@ image = transform(image)
 image = image.unsqueeze(0)
 
 image = image.to(device)
-
-# ==========================================
-# PREDICTION
-# ==========================================
 
 with torch.no_grad():
 

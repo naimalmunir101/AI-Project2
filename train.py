@@ -7,17 +7,9 @@ from torch.utils.data import DataLoader
 
 import matplotlib.pyplot as plt
 
-# ==========================================
-# DEVICE CONFIGURATION
-# ==========================================
-
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 print("Using Device:", device)
-
-# ==========================================
-# IMAGE TRANSFORMATIONS
-# ==========================================
 
 train_transform = transforms.Compose([
 
@@ -39,9 +31,6 @@ test_transform = transforms.Compose([
     transforms.ToTensor()
 ])
 
-# ==========================================
-# LOAD DATASETS
-# ==========================================
 
 train_dataset = datasets.ImageFolder(
 
@@ -54,10 +43,6 @@ valid_dataset = datasets.ImageFolder(
     root="split_dataset/valid",
     transform=test_transform
 )
-
-# ==========================================
-# DATALOADERS
-# ==========================================
 
 train_loader = DataLoader(
 
@@ -73,17 +58,9 @@ valid_loader = DataLoader(
     shuffle=False
 )
 
-# ==========================================
-# CLASS NAMES
-# ==========================================
-
 classes = train_dataset.classes
 
 print("Classes:", classes)
-
-# ==========================================
-# CNN MODEL
-# ==========================================
 
 class RoadCNN(nn.Module):
 
@@ -127,15 +104,8 @@ class RoadCNN(nn.Module):
 
         return x
 
-# ==========================================
-# INITIALIZE MODEL
-# ==========================================
 
 model = RoadCNN().to(device)
-
-# ==========================================
-# LOSS FUNCTION & OPTIMIZER
-# ==========================================
 
 criterion = nn.CrossEntropyLoss()
 
@@ -145,25 +115,13 @@ optimizer = optim.Adam(
     lr=0.001
 )
 
-# ==========================================
-# TRAINING STORAGE
-# ==========================================
-
 train_losses = []
 
 train_accuracies = []
 
 val_accuracies = []
 
-# ==========================================
-# BEST VALIDATION ACCURACY
-# ==========================================
-
 best_val_accuracy = 0
-
-# ==========================================
-# TRAINING LOOP
-# ==========================================
 
 epochs = 15
 
@@ -203,9 +161,6 @@ for epoch in range(epochs):
 
     average_loss = running_loss / len(train_loader)
 
-    # ======================================
-    # VALIDATION
-    # ======================================
 
     model.eval()
 
@@ -229,19 +184,11 @@ for epoch in range(epochs):
 
     val_accuracy = 100 * val_correct / val_total
 
-    # ======================================
-    # STORE RESULTS
-    # ======================================
-
     train_losses.append(average_loss)
 
     train_accuracies.append(train_accuracy)
 
     val_accuracies.append(val_accuracy)
-
-    # ======================================
-    # PRINT RESULTS
-    # ======================================
 
     print(f"\nEpoch [{epoch+1}/{epochs}]")
 
@@ -253,10 +200,6 @@ for epoch in range(epochs):
 
     print("-" * 40)
 
-    # ======================================
-    # SAVE BEST MODEL
-    # ======================================
-
     if val_accuracy > best_val_accuracy:
 
         best_val_accuracy = val_accuracy
@@ -265,20 +208,13 @@ for epoch in range(epochs):
 
         print("Best Model Saved!")
 
-# ==========================================
-# SAVE FINAL MODEL
-# ==========================================
-
 torch.save(model.state_dict(), "road_model.pth")
 
 print("\nFinal Model Saved Successfully!")
 
-# ==========================================
-# PLOT ACCURACY GRAPH
-# ==========================================
-
 epochs_range = range(1, epochs + 1)
 
+#Accuracy graph
 plt.figure(figsize=(8,5))
 
 plt.plot(epochs_range, train_accuracies, label='Training Accuracy')
@@ -299,10 +235,7 @@ plt.savefig("accuracy_graph.png")
 
 plt.show()
 
-# ==========================================
-# PLOT LOSS GRAPH
-# ==========================================
-
+#loss graph
 plt.figure(figsize=(8,5))
 
 plt.plot(epochs_range, train_losses, label='Training Loss')

@@ -135,8 +135,6 @@ cm = confusion_matrix(all_labels, all_predictions)
 
 # ==========================================
 # PLOT
-# ==========================================
-
 plt.figure(figsize=(8,6))
 
 sns.heatmap(
