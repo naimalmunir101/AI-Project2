@@ -151,19 +151,23 @@ print("\nClassification Report:\n")
 
 print(report)
 
-# ==========================================
-# CONVERT TO DATAFRAME
-# ==========================================
-
 df = pd.DataFrame(report_dict).transpose()
 
-# Round values
+
+df = df.drop(
+
+    ['accuracy', 'macro avg', 'weighted avg']
+)
+
+df = df.drop(columns=['support'])
+
+df = df * 100
 
 df = df.round(2)
 
-# ==========================================
-# SAVE REPORT AS PNG
-# ==========================================
+for col in df.columns:
+
+    df[col] = df[col].astype(str) + '%'
 
 fig, ax = plt.subplots(figsize=(12, 5))
 
