@@ -47,6 +47,7 @@ The main objectives of our project are:
 ## **🛠️ Technologies Used**
 
 In this project, we used the following technologies:
+
 <img width="374" height="230" alt="image" src="https://github.com/user-attachments/assets/87b42d46-88e8-4dbf-bdae-209ed147475d" />
 
 ---
@@ -62,6 +63,7 @@ For this project, we collected our own custom dataset using mobile phone camera 
 ### Splitting
 
 We divided the dataset into:
+
 <img width="335" height="115" alt="image" src="https://github.com/user-attachments/assets/c0f65c23-48bb-4df2-aae7-2ca378212f2c" />
 
 This helps the model:
@@ -152,6 +154,10 @@ The confusion matrix shows detailed classification performance of the CNN model 
 
 <img width="455" height="286" alt="image" src="https://github.com/user-attachments/assets/07e74bbb-9801-4636-aca6-8a02e512dec8" />
 
+**4- Classification Report**
+
+<img width="455" height="286" alt="image" src="https://github.com/user-attachments/assets/3ae952cb-096a-4a68-bda3-45c273e1ac9e" />
+
 ---
 
 ## **✨ Project Features**
@@ -177,19 +183,18 @@ PROJECT-2/
 │   ├── train/
 │   ├── valid/
 │   └── test/
-│
 ├── train.py
 ├── test.py
 ├── predict.py
 ├── confusion_matrix.py
 ├── classification_report.py
 ├── split_dataset.py
-│
+├── app.py
 ├── best_road_model.pth
 ├── accuracy_graph.png
 ├── loss_graph.png
 ├── confusion_matrix.png
-│
+├── classification_report.png
 └── README.md
 ```
 
@@ -270,5 +275,5 @@ The project demonstrates how AI can be used to solve real-world infrastructure p
 If you have any questions or would like to discuss the project:
 - Naimal Munir - nemalmunir@gmail.com
 - Eman Fatima - emanfatima5978@gmail.com
-- Fatima Muaz - 
+- Fatima Muaz - bscs24029@itu.edu.pk
 
