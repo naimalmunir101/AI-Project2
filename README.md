@@ -156,7 +156,9 @@ The confusion matrix shows detailed classification performance of the CNN model 
 
 **4- Classification Report**
 
-<img width="455" height="286" alt="image" src="https://github.com/user-attachments/assets/3ae952cb-096a-4a68-bda3-45c273e1ac9e" />
+The model achieved balanced classification performance across all four classes.
+
+<img width="600" height="286" alt="image" src="https://github.com/user-attachments/assets/3ae952cb-096a-4a68-bda3-45c273e1ac9e" />
 
 ---
 
