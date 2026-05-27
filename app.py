@@ -64,7 +64,7 @@ severity_colors = {
 # IMAGE TRANSFORM
 # ==========================================
 transform = transforms.Compose([
-    transforms.Resize((224, 224)),
+    transforms.Resize((128, 128)),
     transforms.ToTensor()
 ])
 
@@ -85,13 +85,20 @@ class RoadCNN(nn.Module):
             nn.ReLU(),
             nn.MaxPool2d(2)
         )
+
         self.fc_layers = nn.Sequential(
-            nn.Flatten(),
-            nn.Linear(128 * 28 * 28, 512),
-            nn.ReLU(),
-            nn.Dropout(0.5),
-            nn.Linear(512, 4)
-        )
+
+    nn.Flatten(),
+
+    nn.Linear(128 * 16 * 16, 256),
+
+    nn.ReLU(),
+
+    nn.Dropout(0.5),
+
+    nn.Linear(256, 4)
+)
+
 
     def forward(self, x):
         x = self.conv_layers(x)

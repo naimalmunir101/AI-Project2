@@ -23,7 +23,7 @@ print("Using Device:", device)
 
 transform = transforms.Compose([
 
-    transforms.Resize((224, 224)),
+    transforms.Resize((128, 128)),
 
     transforms.ToTensor()
 ])
@@ -41,7 +41,7 @@ test_dataset = datasets.ImageFolder(
 test_loader = DataLoader(
 
     test_dataset,
-    batch_size=16,
+    batch_size=32,
     shuffle=False
 )
 
@@ -76,16 +76,16 @@ class RoadCNN(nn.Module):
 
         self.fc_layers = nn.Sequential(
 
-            nn.Flatten(),
+    nn.Flatten(),
 
-            nn.Linear(128 * 28 * 28, 512),
+    nn.Linear(128 * 16 * 16, 256),
 
-            nn.ReLU(),
+    nn.ReLU(),
 
-            nn.Dropout(0.5),
+    nn.Dropout(0.5),
 
-            nn.Linear(512, 4)
-        )
+    nn.Linear(256, 4)
+)
 
     def forward(self, x):
 
