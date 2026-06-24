@@ -28,7 +28,6 @@ Traditionally, road inspection is done manually which is time-consuming, expensi
 - **Team Members:**
   - **Naimal Munir**
   - **Eman Fatima**
-  - **Fatima Muaz**
 
 ---
 
@@ -277,5 +276,5 @@ The project demonstrates how AI can be used to solve real-world infrastructure p
 If you have any questions or would like to discuss the project:
 - Naimal Munir - nemalmunir@gmail.com
 - Eman Fatima - emanfatima5978@gmail.com
-- Fatima Muaz - bscs24029@itu.edu.pk
+
 
